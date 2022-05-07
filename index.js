@@ -17,12 +17,12 @@ const client = new MongoClient(uri, { useNewUrlParser: true, useUnifiedTopology:
 async function run() {
     try {
         await client.connect();
-        const userCollection = client.db("cycleZone").collection("products");
+        const productsCollection = client.db("cycleZone").collection("products");
 
         // get products
         app.get('/products', async (req, res) => {
             const query = {};
-            const cursor = userCollection.find(query);
+            const cursor = productsCollection.find(query);
             const users = await cursor.toArray();
             res.send(users);
         })
@@ -31,7 +31,15 @@ async function run() {
         app.get('/products/:id', async (req, res) => {
             const id = req.params.id;
             const query = { _id: ObjectId(id) };
-            const result = await userCollection.findOne(query)
+            const result = await productsCollection.findOne(query)
+            res.send(result);
+        })
+
+        // delete user
+        app.delete('/products/:id', async (req, res) => {
+            const id = req.params.id;
+            const query = { _id: ObjectId(id) }
+            const result = await productsCollection.deleteOne(query);
             res.send(result);
         })
 
