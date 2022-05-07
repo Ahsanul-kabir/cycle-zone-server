@@ -35,7 +35,7 @@ async function run() {
             res.send(result);
         })
 
-        // POST User : Add a new product
+        // POST product : Add a new product
         app.post('/products', async (req, res) => {
             const newProduct = req.body;
             // console.log('Adding uew product', newProduct);
@@ -43,13 +43,30 @@ async function run() {
             res.send(result);
         })
 
-        // delete user
+        // delete product
         app.delete('/products/:id', async (req, res) => {
             const id = req.params.id;
             const query = { _id: ObjectId(id) }
             const result = await productsCollection.deleteOne(query);
             res.send(result);
         })
+
+        // update restock
+        app.put('/products/:id', async (req, res) => {
+            const id = req.params.id;
+            const updatedStock = req.body;
+            const filter = { _id: ObjectId(id) }
+            const options = { upsert: true };
+
+            const updateDoc = {
+                $set: {
+                    quantity: updatedStock.quantity,
+                },
+            };
+            const result = await productsCollection.updateOne(filter, updateDoc, options);
+            res.send(result);
+        })
+
 
     }
     finally {
