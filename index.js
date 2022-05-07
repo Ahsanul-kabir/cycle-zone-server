@@ -35,6 +35,14 @@ async function run() {
             res.send(result);
         })
 
+        // POST User : Add a new product
+        app.post('/products', async (req, res) => {
+            const newProduct = req.body;
+            // console.log('Adding uew product', newProduct);
+            const result = await productsCollection.insertOne(newProduct);
+            res.send(result);
+        })
+
         // delete user
         app.delete('/products/:id', async (req, res) => {
             const id = req.params.id;
