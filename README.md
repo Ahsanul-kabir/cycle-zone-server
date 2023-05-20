@@ -2,4 +2,4 @@
 
 ### live site
 
-Live Site-Server Side [Click Here](https://afternoon-ridge-55411.herokuapp.com/).
+Live Site-Server Side [Click Here](https://cycle-zone-server.onrender.com/).
